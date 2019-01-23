@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "breakout"
+version = "0.0.1"
+description = "Tiny implementation of the circuit breaker microservice pattern for asynchronous frameworks."
+authors = ["rootkitten <rootkitten@protonmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+
+[tool.poetry.dev-dependencies]
+pytest = "^4.1"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
