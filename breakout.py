@@ -1,3 +1,6 @@
+from enum import IntEnum
+
+
 __version__ = '0.0.1'
 __all__ = [
     'Event',
@@ -40,7 +43,7 @@ class ServiceUnavailableError(Exception):
     pass
 
 
-class State:
+class State(IntEnum):
     CLOSED = 0
     CLOSING = 1
     OPEN = 2
@@ -71,7 +74,7 @@ class CircuitBreaker:
         if subscriber is not None:
             subscriber(event)
 
-    def _open():
+    def _open(self):
         self._state = State.OPEN
         self._task = self._scheduler.schedule(
             self._half_close,
@@ -80,7 +83,7 @@ class CircuitBreaker:
 
         self._publish(OpenEvent())
 
-    def _half_close():
+    def _half_close(self):
         self._state = State.CLOSING
         self._task = self._scheduler.schedule(
             self._close,
@@ -89,13 +92,13 @@ class CircuitBreaker:
 
         self._publish(ClosingEvent())
 
-    def _close():
+    def _close(self):
         self._errors = 0
         self._state = State.CLOSED
 
         self._publish(CloseEvent())
 
-    def on_error():
+    def on_error(self):
         if self._state == State.CLOSING:
             self._scheduler.cancel(self._task)
             self._open()
@@ -107,14 +110,14 @@ class CircuitBreaker:
         if self._errors > self._error_limit:
             self._open()
 
-    def on_success():
+    def on_success(self):
         if self._state != State.CLOSING:
             return
 
-        self._options.scheduler.cancel(self._task)
+        self._scheduler.cancel(self._task)
         self._close()
 
-    def is_open():
+    def is_open(self):
         return self._state == State.OPEN
 
 
