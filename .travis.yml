@@ -1,0 +1,9 @@
+language: python
+python:
+  - "3.6"
+install:
+  - pip install poetry
+  - poetry install
+script:
+  - poetry run pyliny breakout.py example.py test.py
+  - poetry run pytest test.py

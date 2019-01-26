@@ -5,7 +5,7 @@ A test suite for the breakout module.
 from breakout import __version__
 
 
-def test_version(self):
+def test_version():
     """
     Just a simple placeholder test. Useful tests will be implemented soon.
     """
