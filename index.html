@@ -123,19 +123,9 @@
         const buttonInput = document.querySelector('button');
         const socket = new WebSocket(`ws://${document.location.host}/status`);
 
-        function onOpen() {
-            mainElement.setAttribute('class', 'overwhelmed');
-            iconElement.textContent = 'close';
-        }
-
-        function onClosing() {
-            mainElement.setAttribute('class', 'recovering');
-            iconElement.textContent = 'refresh';
-        }
-
-        function onClosed() {
-            mainElement.setAttribute('class', 'lively');
-            iconElement.textContent = 'check';
+        function transit(state, icon) {
+            mainElement.setAttribute('class', state);
+            iconElement.textContent = icon;
         }
 
         socket.onmessage = (event) => {
@@ -143,13 +133,17 @@
             const state = status.state;
 
             if (state === 'CLOSED') {
-                onClosed();
+                transit('lively', 'check');
             } else if (state === 'CLOSING') {
-                onClosing();
+                transit('recovering', 'refresh');
             } else {
-                onOpen();
+                transit('overwhelmed', 'close');
             }
         };
+
+        socket.onclose = () => {
+            transit('unknown', 'signal_wifi_off');
+        }
 
         buttonInput.addEventListener('click', () => {
             const request = new XMLHttpRequest();

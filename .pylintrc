@@ -1,0 +1,46 @@
+[MESSAGES CONTROL]
+disable=abstract-method, arguments-differ, attribute-defined-outside-init
+
+[REFACTORING]
+never-returning-functions=
+
+[TYPECHECK]
+ignore-none=no
+ignore-on-opaque-inference=no
+ignored-classes=
+
+[FORMAT]
+expected-line-ending-format=LF
+ignore-long-lines=
+indent-after-paren=4
+indent-string='    '
+max-line-length=88
+no-space-check=
+
+[SIMILARITIES]
+ignore-comments=no
+ignore-docstrings=no
+
+[MISCELLANEOUS]
+notes=
+
+[LOGGING]
+logging-format-style=new
+
+[VARIABLES]
+callbacks=
+dummy-variables-rgx=
+ignored-argument-names=
+init-import=yes
+redefining-builtins-modules=
+
+[BASIC]
+class-attribute-naming-style=UPPER_CASE
+const-naming-style=any
+good-names=
+inlinevar-naming-style=snake_case
+
+[DESIGN]
+max-args=6
+max-attributes=8
+min-public-methods=0
